@@ -3,7 +3,9 @@ class Creatures:
         self.type = 'Creature'
 
     class Alive:
+        type: str
         name: str
+        level: int
         strength: int
         agility: int
         intelligence: int
@@ -11,27 +13,31 @@ class Creatures:
         hp: int
         shield: int
         armor: int
-        inventory: dict
+        # spells: dict
+        # inventory: dict
         npc: bool
         god: bool
 
-        def __init__(self, name):
+        def __init__(self, name, level=1, strength=1, agility=1, intelligence=1, wisdom=1,
+                     shield=1, armor=0, spells=None, inventory=None, npc=False, god=False):
             self.type = 'Alive'
             self.name = name
-            self.strength = 1
-            self.agility = 1
-            self.intelligence = 1
-            self.wisdom = 1
-            self.shield = 0
-            self.hp = 100 + self.strength * 3 + self.shield
-            self.armor = 0
-            self.inventory = {}
-            self.npc = False
-            self.god = False
+            self.level = level
+            self.strength = strength
+            self.agility = agility
+            self.intelligence = intelligence
+            self.wisdom = wisdom
+            self.shield = shield
+            self.hp = 97 + self.strength * 3
+            self.armor = armor
+            self.spells = spells
+            self.inventory = inventory
+            self.npc = npc
+            self.god = god
 
         def add_strength(self, x: int):
             self.strength += x
-            self.hp = 100 + self.strength * 3 + self.shield
+            self.hp = 97 + self.strength * 3
 
         def add_agility(self, x: int):
             self.agility += x
@@ -42,6 +48,12 @@ class Creatures:
         def add_wisdom(self, x: int):
             self.wisdom += x
 
+        def add_shield(self, x: int):
+            self.shield += x
+
+        def add_armor(self, x: int):
+            self.armor += x
+
     class Undead:
         name: str
         strength: int
@@ -51,7 +63,8 @@ class Creatures:
         hp: int
         shield: int
         armor: int
-        inventory: dict
+        # spells: dict
+        # inventory: dict
         npc: bool
         god: bool
 
@@ -63,22 +76,9 @@ class Creatures:
             self.intelligence = 1
             self.wisdom = 1
             self.shield = 0
-            self.hp = 100 + self.strength * 3 + self.shield
+            self.hp = 97 + self.strength * 3
             self.armor = 0
-            self.inventory = {}
+            self.spells = []
+            self.inventory = []
             self.npc = False
             self.god = False
-
-
-bob = Creatures.Alive(name='Bob')
-print(bob.agility)
-bob.add_agility(5)
-print(bob.agility)
-# print(bob.strength)
-# print(bob.hp)
-# bob.add_strength(4)
-# print(bob.strength)
-# print(bob.hp)
-# bob.add_strength(5)
-# print(bob.strength)
-# print(bob.hp)
