@@ -25,15 +25,37 @@ def main():
                 name = input(f'Enter name of undead creature:\n')
                 dict_of_creatures[f'{name}'] = Creatures.Undead(name)
 
-    def edit_creature(n,s):
-        match s:
+    def edit_creature(nm, st, *xv):
+        match st:
             case 'name':
                 name = input('Enter a new name: ')
-                dict_of_creatures[f'{name}'] = dict_of_creatures.get(f'{n}')
+                dict_of_creatures[f'{name}'] = dict_of_creatures.get(f'{nm}')
                 dict_of_creatures[f'{name}'].name = name
-                del dict_of_creatures[f'{n}']
+                del dict_of_creatures[f'{nm}']
             case 'level':
-                pass
+                dict_of_creatures[f'{nm}'].level = xv
+            case 'strength':
+                dict_of_creatures[f'{nm}'].strength = xv
+            case 'agility':
+                dict_of_creatures[f'{nm}'].agility = xv
+            case 'intelligence':
+                dict_of_creatures[f'{nm}'].intelligence = xv
+            case 'wisdom':
+                dict_of_creatures[f'{nm}'].wisdom = xv
+            case 'shield':
+                dict_of_creatures[f'{nm}'].shield = xv
+            case 'current_hp':
+                dict_of_creatures[f'{nm}'].current_hp = xv
+            case 'armor':
+                dict_of_creatures[f'{nm}'].armor = xv
+            case 'spells':
+                dict_of_creatures[f'{nm}'].spells = xv
+            case 'inventory':
+                dict_of_creatures[f'{nm}'].inventory = xv
+            case 'npc':
+                dict_of_creatures[f'{nm}'].npc = xv
+            case 'god':
+                dict_of_creatures[f'{nm}'].god = xv
 
     def load_creatures():
         s = input('Enter file name (wout .json)'
@@ -60,6 +82,7 @@ def main():
                           'intelligence': dict_of_creatures.get(f'{s}').intelligence,
                           'wisdom': dict_of_creatures.get(f'{s}').wisdom,
                           'shield': dict_of_creatures.get(f'{s}').shield,
+                          'current_hp': dict_of_creatures.get(f'{s}').current_hp,
                           'armor': dict_of_creatures.get(f'{s}').armor,
                           'spells': dict_of_creatures.get(f'{s}').spells,
                           'inventory': dict_of_creatures.get(f'{s}').inventory,
@@ -92,7 +115,17 @@ def main():
                           'intelligence, wisdom, shield, armor,\n'
                           'spells, inventory, npc, god?\n'
                           'Enter: ').lower()
-                edit_creature(n,s)
+                if s in ('name',):
+                    edit_creature(n, s)
+                elif s in ('level', 'strength', 'agility', 'intelligence', 'wisdom', 'shield', 'current_hp', 'armor'):
+                    x = int(input(f'New value of {s}: '))
+                    edit_creature(n, s, x)
+                elif s in ('spells', 'inventory'):
+                    x = list(input(f'New value of {s} (e.g.: "knife, potion, etc"): '))
+                    edit_creature(n, s, x)
+                elif s in ('npc', 'god'):
+                    x = bool(input(f'New value of {s} (True/False): '))
+                    edit_creature(n, s, x)
             case 'load':
                 load_creatures()
             case 'save':

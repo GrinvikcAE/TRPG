@@ -10,16 +10,17 @@ class Creatures:
         agility: int
         intelligence: int
         wisdom: int
-        hp: int
+        max_hp: int
+        current_hp: int
         shield: int
         armor: int
-        # spells: dict
+        # spells: list
         # inventory: dict
         npc: bool
         god: bool
 
         def __init__(self, name, level=1, strength=1, agility=1, intelligence=1, wisdom=1,
-                     shield=1, armor=0, spells=None, inventory=None, npc=False, god=False):
+                     shield=1, current_hp=100, armor=0, spells=None, inventory=None, npc=False, god=False):
             self.type = 'Alive'
             self.name = name
             self.level = level
@@ -28,7 +29,8 @@ class Creatures:
             self.intelligence = intelligence
             self.wisdom = wisdom
             self.shield = shield
-            self.hp = 97 + self.strength * 3
+            self.max_hp = 97 + self.strength * 3
+            self.current_hp = current_hp
             self.armor = armor
             self.spells = spells
             self.inventory = inventory
