@@ -35,6 +35,9 @@ def main():
                 name = input(f'Enter name of undead creature:\n')
                 dict_of_creatures[f'{name}'] = Creatures.Undead(name)
 
+    def add_spell(nm: str):
+        dict_of_creatures.get(f'{nm}').spells.append(input(f'Enter spell name:\n'))
+
     def edit_creature(nm: str, st: str, xv=None):
         match st:
             case 'name':
@@ -71,7 +74,7 @@ def main():
     def load_creatures():
         s = input('Enter file name (wout .json)\n'
                   'Enter: ')
-        with open(f'{s}.json', 'r') as js:
+        with open(f'saves/{s}.json', 'r') as js:
             d = json.load(js)
             for i in range(len(d)):
                 try:
@@ -85,14 +88,14 @@ def main():
                         edit_creature(nm=d[i]['name'], st='shield', xv=d[i]['shield'])
                         edit_creature(nm=d[i]['name'], st='current_hp', xv=d[i]['current_hp'])
                         edit_creature(nm=d[i]['name'], st='armor', xv=d[i]['armor'])
-                        edit_creature(nm=d[i]['name'], st='spells', xv=[d[i]['spells']])
-                        edit_creature(nm=d[i]['name'], st='inventory', xv=[d[i]['inventory']])
+                        edit_creature(nm=d[i]['name'], st='spells', xv=d[i]['spells'])
+                        edit_creature(nm=d[i]['name'], st='inventory', xv=d[i]['inventory'])
                         edit_creature(nm=d[i]['name'], st='npc', xv=d[i]['npc'])
                         edit_creature(nm=d[i]['name'], st='god', xv=d[i]['god'])
                     elif d[i]['type'] == 'Undead':
                         dict_of_creatures[f'{d[i]["name"]}'] = Creatures.Undead(d[i]['name'])
                 except AttributeError:
-                    print('Error')
+                    print('Error in load file')
 
     def save_creatures():
         s = input('Save all creatures or only one (enter "all" or name of creature)?\n'
@@ -116,7 +119,7 @@ def main():
                          'npc': dict_of_creatures.get(i).npc,
                          'god': dict_of_creatures.get(i).god}
                     lst.append(d)
-                with open('all_creatures.json', 'w') as js:
+                with open('saves/all_creatures.json', 'w') as js:
                     json.dump(lst, js, indent=3)
             case _:
                 if dict_of_creatures[f'{s}'].type == 'Alive':
@@ -134,7 +137,7 @@ def main():
                           'inventory': dict_of_creatures.get(f'{s}').inventory,
                           'npc': dict_of_creatures.get(f'{s}').npc,
                           'god': dict_of_creatures.get(f'{s}').god}]
-                    with open(f'{s}.json', 'w') as js:
+                    with open(f'saves/{s}.json', 'w') as js:
                         json.dump(d, js, indent=3)
                 elif dict_of_creatures[f'{s}'].type == 'Undead':
                     pass
@@ -147,6 +150,8 @@ def main():
                   f'Edit creature --- edit\n'
                   f'Save creatures --- save\n'
                   f'Load creatures --- load\n'
+                  f'Add spell --- add spell\n'
+                  f'Add item to inventory --- add item\n'
                   f'Close --- exit\n'
                   f'Enter: ').lower()
 
