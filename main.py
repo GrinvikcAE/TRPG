@@ -4,13 +4,23 @@ import json
 
 def main():
     def call_info():
-        name = input(f'Name of creature:\n')
+        name = input(f'Name of creature: ')
         try:
-            print(f' Name: {dict_of_creatures.get(f"{name}").name}\n',
+            print(f'Type: {dict_of_creatures.get(f"{name}").type}\n',
+                  f'Name: {dict_of_creatures.get(f"{name}").name}\n',
                   f'Strength: {dict_of_creatures.get(f"{name}").strength}\n',
                   f'Agility: {dict_of_creatures.get(f"{name}").agility}\n',
                   f'Intelligence: {dict_of_creatures.get(f"{name}").intelligence}\n',
-                  f'Wisdom: {dict_of_creatures.get(f"{name}").wisdom}\n')
+                  f'Wisdom: {dict_of_creatures.get(f"{name}").wisdom}\n',
+                  f'Shield: {dict_of_creatures.get(f"{name}").shield}\n',
+                  f'Max hp: {dict_of_creatures.get(f"{name}").max_hp}\n',
+                  f'Current hp: {dict_of_creatures.get(f"{name}").current_hp}\n',
+                  f'Armor: {dict_of_creatures.get(f"{name}").armor}\n',
+                  f'Spells: {dict_of_creatures.get(f"{name}").spells}\n',
+                  f'Inventory: {dict_of_creatures.get(f"{name}").inventory}\n',
+                  f'NPC: {dict_of_creatures.get(f"{name}").npc}\n',
+                  f'God: {dict_of_creatures.get(f"{name}").god}\n',
+                  )
         except:
             print('Error')
 
@@ -25,7 +35,7 @@ def main():
                 name = input(f'Enter name of undead creature:\n')
                 dict_of_creatures[f'{name}'] = Creatures.Undead(name)
 
-    def edit_creature(nm, st, *xv):
+    def edit_creature(nm: str, st: str, *xv: int | list):
         match st:
             case 'name':
                 name = input('Enter a new name: ')
@@ -58,13 +68,32 @@ def main():
                 dict_of_creatures[f'{nm}'].god = xv
 
     def load_creatures():
-        s = input('Enter file name (wout .json)'
+        s = input('Enter file name (wout .json)\n'
                   'Enter: ')
         with open(f'{s}.json', 'r') as js:
             d = json.load(js)
+            print(d)
             for i in range(len(d)):
-                if d[i]['type'] == 'Alive':
-                    dict_of_creatures[f'{d[i]["name"]}'] = Creatures.Alive(d[i]['name'])
+                try:
+                    if d[i]['type'] == 'Alive':
+                        print(d[i]['name'])
+                        dict_of_creatures[d[i]['name']] = Creatures.Alive(d[i]['name'])
+                        edit_creature(d[i]['name'], 'level', int(d[i]['level']))
+                        edit_creature(d[i]['name'], 'strength', int(d[i]['strength']))
+                        edit_creature(d[i]['name'], 'agility', int(d[i]['agility']))
+                        edit_creature(d[i]['name'], 'intelligence', int(d[i]['intelligence']))
+                        edit_creature(d[i]['name'], 'wisdom', int(d[i]['wisdom']))
+                        edit_creature(d[i]['name'], 'shield', int(d[i]['shield']))
+                        edit_creature(d[i]['name'], 'current_hp', int(d[i]['current_hp']))
+                        edit_creature(d[i]['name'], 'armor', int(d[i]['armor']))
+                        edit_creature(d[i]['name'], 'spells', list(d[i]['spells']))
+                        edit_creature(d[i]['name'], 'inventory', list(d[i]['inventory']))
+                        edit_creature(d[i]['name'], 'npc', bool(d[i]['npc']))
+                        edit_creature(d[i]['name'], 'god', bool(d[i]['god']))
+                    elif d[i]['type'] == 'Undead':
+                        dict_of_creatures[f'{d[i]["name"]}'] = Creatures.Undead(d[i]['name'])
+                except:
+                    print('Error')
 
     def save_creatures():
         s = input('Save all creatures or only one (enter "all" or name of creature)?\n'
