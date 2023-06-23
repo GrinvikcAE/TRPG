@@ -1,4 +1,5 @@
 from models.creatures import Creatures
+import action.step_field as sf
 import json
 
 
@@ -158,6 +159,7 @@ def main():
                   f'Load creatures --- load\n'
                   f'Add spell --- add spell\n'
                   f'Add item to inventory --- add item\n'
+                  f'Start battle --- start\n'
                   f'Close --- exit\n'
                   f'Enter: ').lower()
 
@@ -187,6 +189,15 @@ def main():
                 load_creatures()
             case 'save':
                 save_creatures()
+            case 'start':
+                name_agility = {}
+                for name in dict_of_creatures:
+                    name_agility[dict_of_creatures.get(name).name] = dict_of_creatures.get(name).agility
+                res = sf.battle(creatures=dict_of_creatures, name_agility=name_agility)
+                if res:
+                    print('You win!')
+                else:
+                    print('You lose!')
             case 'exit':
                 break
 
