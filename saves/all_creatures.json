@@ -1,50 +1,36 @@
 [
    {
       "type": "Alive",
-      "name": "Bib",
-      "level": 1,
-      "strength": 5,
-      "agility": 1,
-      "intelligence": 1,
-      "wisdom": 1,
-      "shield": 1,
-      "current_hp": 100,
-      "armor": 0,
-      "spells": [
-         [
-            null
-         ]
-      ],
-      "inventory": [
-         [
-            null
-         ]
-      ],
-      "npc": false,
-      "god": false
-   },
-   {
-      "type": "Alive",
       "name": "Bob",
       "level": 1,
       "strength": 11,
       "agility": 1,
       "intelligence": 1,
       "wisdom": 1,
-      "shield": 1,
-      "current_hp": 100,
+      "shield": 0,
+      "current_hp": 130,
       "armor": 0,
-      "spells": [
-         [
-            null
-         ]
-      ],
-      "inventory": [
-         [
-            null
-         ]
-      ],
+      "spells": null,
+      "inventory": null,
       "npc": false,
-      "god": false
+      "god": false,
+      "enemy": true
+   },
+   {
+      "type": "Alive",
+      "name": "Bib",
+      "level": 1,
+      "strength": 5,
+      "agility": 7,
+      "intelligence": 1,
+      "wisdom": 1,
+      "shield": 0,
+      "current_hp": 112,
+      "armor": 0,
+      "spells": null,
+      "inventory": null,
+      "npc": false,
+      "god": false,
+      "enemy": false
    }
 ]
