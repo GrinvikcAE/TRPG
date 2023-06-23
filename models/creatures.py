@@ -29,7 +29,7 @@ class Creatures:
             self.intelligence = intelligence
             self.wisdom = wisdom
             self.shield = shield
-            self.max_hp = 97 + self.strength * 3
+            self.max_hp = self.calc_max_hp()
             self.current_hp = current_hp
             self.armor = armor
             self.spells = spells
@@ -37,9 +37,13 @@ class Creatures:
             self.npc = npc
             self.god = god
 
+        def calc_max_hp(self) -> int:
+            self.max_hp = 97 + self.strength * 3
+            return self.max_hp
+
         def add_strength(self, x: int):
             self.strength += x
-            self.hp = 97 + self.strength * 3
+            self.max_hp = self.calc_max_hp()
 
         def add_agility(self, x: int):
             self.agility += x

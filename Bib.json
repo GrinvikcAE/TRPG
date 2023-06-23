@@ -1,0 +1,18 @@
+[
+   {
+      "type": "Alive",
+      "name": "Bib",
+      "level": 1,
+      "strength": 5,
+      "agility": 1,
+      "intelligence": 1,
+      "wisdom": 1,
+      "shield": 1,
+      "current_hp": 100,
+      "armor": 0,
+      "spells": null,
+      "inventory": null,
+      "npc": false,
+      "god": false
+   }
+]

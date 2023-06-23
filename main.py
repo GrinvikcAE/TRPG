@@ -35,7 +35,7 @@ def main():
                 name = input(f'Enter name of undead creature:\n')
                 dict_of_creatures[f'{name}'] = Creatures.Undead(name)
 
-    def edit_creature(nm: str, st: str, *xv: int | list):
+    def edit_creature(nm: str, st: str, xv=None):
         match st:
             case 'name':
                 name = input('Enter a new name: ')
@@ -72,27 +72,26 @@ def main():
                   'Enter: ')
         with open(f'{s}.json', 'r') as js:
             d = json.load(js)
-            print(d)
             for i in range(len(d)):
                 try:
                     if d[i]['type'] == 'Alive':
-                        print(d[i]['name'])
                         dict_of_creatures[d[i]['name']] = Creatures.Alive(d[i]['name'])
-                        edit_creature(d[i]['name'], 'level', int(d[i]['level']))
-                        edit_creature(d[i]['name'], 'strength', int(d[i]['strength']))
-                        edit_creature(d[i]['name'], 'agility', int(d[i]['agility']))
-                        edit_creature(d[i]['name'], 'intelligence', int(d[i]['intelligence']))
-                        edit_creature(d[i]['name'], 'wisdom', int(d[i]['wisdom']))
-                        edit_creature(d[i]['name'], 'shield', int(d[i]['shield']))
-                        edit_creature(d[i]['name'], 'current_hp', int(d[i]['current_hp']))
-                        edit_creature(d[i]['name'], 'armor', int(d[i]['armor']))
-                        edit_creature(d[i]['name'], 'spells', list(d[i]['spells']))
-                        edit_creature(d[i]['name'], 'inventory', list(d[i]['inventory']))
-                        edit_creature(d[i]['name'], 'npc', bool(d[i]['npc']))
-                        edit_creature(d[i]['name'], 'god', bool(d[i]['god']))
+                        edit_creature(nm=d[i]['name'], st='level', xv=d[i]['level'])
+                        edit_creature(nm=d[i]['name'], st='strength', xv=d[i]['strength'])
+                        edit_creature(nm=d[i]['name'], st='agility', xv=d[i]['agility'])
+                        edit_creature(nm=d[i]['name'], st='intelligence', xv=d[i]['intelligence'])
+                        edit_creature(nm=d[i]['name'], st='wisdom', xv=d[i]['wisdom'])
+                        edit_creature(nm=d[i]['name'], st='shield', xv=d[i]['shield'])
+                        dict_of_creatures[d[i]['name']].max_hp = dict_of_creatures[d[i]['name']].calc_max_hp()
+                        edit_creature(nm=d[i]['name'], st='current_hp', xv=d[i]['current_hp'])
+                        edit_creature(nm=d[i]['name'], st='armor', xv=d[i]['armor'])
+                        edit_creature(nm=d[i]['name'], st='spells', xv=[d[i]['spells']])
+                        edit_creature(nm=d[i]['name'], st='inventory', xv=[d[i]['inventory']])
+                        edit_creature(nm=d[i]['name'], st='npc', xv=d[i]['npc'])
+                        edit_creature(nm=d[i]['name'], st='god', xv=d[i]['god'])
                     elif d[i]['type'] == 'Undead':
                         dict_of_creatures[f'{d[i]["name"]}'] = Creatures.Undead(d[i]['name'])
-                except:
+                except AttributeError:
                     print('Error')
 
     def save_creatures():
