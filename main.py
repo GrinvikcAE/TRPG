@@ -46,6 +46,7 @@ def main():
                 dict_of_creatures[f'{nm}'].level = xv
             case 'strength':
                 dict_of_creatures[f'{nm}'].strength = xv
+                dict_of_creatures[f'{nm}'].max_hp = dict_of_creatures[f'{nm}'].calc_max_hp()
             case 'agility':
                 dict_of_creatures[f'{nm}'].agility = xv
             case 'intelligence':
@@ -82,7 +83,6 @@ def main():
                         edit_creature(nm=d[i]['name'], st='intelligence', xv=d[i]['intelligence'])
                         edit_creature(nm=d[i]['name'], st='wisdom', xv=d[i]['wisdom'])
                         edit_creature(nm=d[i]['name'], st='shield', xv=d[i]['shield'])
-                        dict_of_creatures[d[i]['name']].max_hp = dict_of_creatures[d[i]['name']].calc_max_hp()
                         edit_creature(nm=d[i]['name'], st='current_hp', xv=d[i]['current_hp'])
                         edit_creature(nm=d[i]['name'], st='armor', xv=d[i]['armor'])
                         edit_creature(nm=d[i]['name'], st='spells', xv=[d[i]['spells']])
@@ -99,7 +99,25 @@ def main():
                   'Enter: ')
         match s:
             case 'all':
-                pass
+                lst = []
+                for i in dict_of_creatures:
+                    d = {'type': dict_of_creatures.get(i).type,
+                         'name': dict_of_creatures.get(i).name,
+                         'level': dict_of_creatures.get(i).level,
+                         'strength': dict_of_creatures.get(i).strength,
+                         'agility': dict_of_creatures.get(i).agility,
+                         'intelligence': dict_of_creatures.get(i).intelligence,
+                         'wisdom': dict_of_creatures.get(i).wisdom,
+                         'shield': dict_of_creatures.get(i).shield,
+                         'current_hp': dict_of_creatures.get(i).current_hp,
+                         'armor': dict_of_creatures.get(i).armor,
+                         'spells': dict_of_creatures.get(i).spells,
+                         'inventory': dict_of_creatures.get(i).inventory,
+                         'npc': dict_of_creatures.get(i).npc,
+                         'god': dict_of_creatures.get(i).god}
+                    lst.append(d)
+                with open('all_creatures.json', 'w') as js:
+                    json.dump(lst, js, indent=3)
             case _:
                 if dict_of_creatures[f'{s}'].type == 'Alive':
                     d = [{'type': dict_of_creatures.get(f'{s}').type,
