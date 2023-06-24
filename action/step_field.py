@@ -1,6 +1,7 @@
 from random import randint, choice
 from time import sleep
 
+
 def battle(creatures: dict, name_agility) -> bool:
     def turn(npc=True):
         def healing(name, heal):
@@ -118,4 +119,3 @@ def battle(creatures: dict, name_agility) -> bool:
             for i in allies:
                 print(f'{creatures.get(i).name}: {creatures.get(i).current_hp}/{creatures.get(i).max_hp}')
             print()
-
