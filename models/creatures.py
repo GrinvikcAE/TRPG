@@ -99,6 +99,3 @@ class Creatures:
             self.inventory = []
             self.npc = False
             self.god = False
-
-
-
