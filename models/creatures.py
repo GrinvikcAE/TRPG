@@ -19,9 +19,11 @@ class Creatures:
         npc: bool
         god: bool
         enemy: bool
+        dead: bool
 
         def __init__(self, name, level=1, strength=1, agility=1, intelligence=1, wisdom=1,
-                     shield=0, current_hp=100, armor=0, spells=None, inventory=None, npc=False, god=False, enemy=False):
+                     shield=0, current_hp=100, armor=0, spells=None, inventory=None,
+                     npc=False, god=False, enemy=False, dead=False):
             self.type = 'Alive'
             self.name = name
             self.level = level
@@ -38,6 +40,7 @@ class Creatures:
             self.npc = npc
             self.god = god
             self.enemy = enemy
+            self.dead = dead
 
         def calc_max_hp(self) -> int:
             self.max_hp = 97 + self.strength * 3

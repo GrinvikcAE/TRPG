@@ -14,7 +14,8 @@
       "inventory": null,
       "npc": false,
       "god": false,
-      "enemy": true
+      "enemy": true,
+      "dead": false
    },
    {
       "type": "Alive",
@@ -31,7 +32,8 @@
       "inventory": null,
       "npc": false,
       "god": false,
-      "enemy": false
+      "enemy": false,
+      "dead": false
    },
    {
       "type": "Alive",
@@ -48,6 +50,7 @@
       "inventory": null,
       "npc": false,
       "god": false,
-      "enemy": false
+      "enemy": false,
+      "dead": false
    }
 ]
