@@ -49,10 +49,13 @@ def main():
     def edit_creature(nm: str, st: str, xv=None):
         match st:
             case 'name':
-                name = input('Enter a new name: ')
-                dict_of_creatures[f'{name}'] = dict_of_creatures.get(f'{nm}')
-                dict_of_creatures[f'{name}'].name = name
-                del dict_of_creatures[f'{nm}']
+                try:
+                    name = input('Enter a new name: ')
+                    dict_of_creatures[f'{name}'] = dict_of_creatures.get(f'{nm}')
+                    dict_of_creatures[f'{name}'].name = name
+                    del dict_of_creatures[f'{nm}']
+                except AttributeError:
+                    print('Name not found')
             case 'level':
                 dict_of_creatures[f'{nm}'].level = xv
             case 'strength':
@@ -120,46 +123,16 @@ def main():
             case 'all':
                 lst = []
                 for i in dict_of_creatures:
-                    d = {'type': dict_of_creatures.get(i).type,
-                         'name': dict_of_creatures.get(i).name,
-                         'level': dict_of_creatures.get(i).level,
-                         'strength': dict_of_creatures.get(i).strength,
-                         'agility': dict_of_creatures.get(i).agility,
-                         'intelligence': dict_of_creatures.get(i).intelligence,
-                         'wisdom': dict_of_creatures.get(i).wisdom,
-                         'shield': dict_of_creatures.get(i).shield,
-                         'current_hp': dict_of_creatures.get(i).current_hp,
-                         'armor': dict_of_creatures.get(i).armor,
-                         'spells': dict_of_creatures.get(i).spells,
-                         'inventory': dict_of_creatures.get(i).inventory,
-                         'npc': dict_of_creatures.get(i).npc,
-                         'god': dict_of_creatures.get(i).god,
-                         'enemy': dict_of_creatures.get(i).enemy,
-                         'dead': dict_of_creatures.get(i).dead}
+                    d = dict_of_creatures.get(i).save()
                     lst.append(d)
                 with open('saves/all_creatures.json', 'w') as js:
                     json.dump(lst, js, indent=3)
             case _ if s in dict_of_creatures:
-                if dict_of_creatures[f'{s}'].type == 'Alive':
-                    d = [{'type': dict_of_creatures.get(f'{s}').type,
-                          'name': dict_of_creatures.get(f'{s}').name,
-                          'level': dict_of_creatures.get(f'{s}').level,
-                          'strength': dict_of_creatures.get(f'{s}').strength,
-                          'agility': dict_of_creatures.get(f'{s}').agility,
-                          'intelligence': dict_of_creatures.get(f'{s}').intelligence,
-                          'wisdom': dict_of_creatures.get(f'{s}').wisdom,
-                          'shield': dict_of_creatures.get(f'{s}').shield,
-                          'current_hp': dict_of_creatures.get(f'{s}').current_hp,
-                          'armor': dict_of_creatures.get(f'{s}').armor,
-                          'spells': dict_of_creatures.get(f'{s}').spells,
-                          'inventory': dict_of_creatures.get(f'{s}').inventory,
-                          'npc': dict_of_creatures.get(f'{s}').npc,
-                          'god': dict_of_creatures.get(f'{s}').god,
-                          'enemy': dict_of_creatures.get(f'{s}').enemy,
-                          'dead': dict_of_creatures.get(f'{s}').dead}]
+                if dict_of_creatures[s].type == 'Alive':
+                    d = dict_of_creatures.get(s).save()
                     with open(f'saves/{s}.json', 'w') as js:
                         json.dump(d, js, indent=3)
-                elif dict_of_creatures[f'{s}'].type == 'Undead':
+                elif dict_of_creatures[s].type == 'Undead':
                     pass
             case _:
                 print('Invalid input')

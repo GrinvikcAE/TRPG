@@ -42,6 +42,12 @@ class Creatures:
             self.enemy = enemy
             self.dead = dead
 
+        def __setattr__(self, key, value):
+            self.__dict__[key] = value
+
+        def save(self):
+            return self.__dict__
+
         def calc_max_hp(self) -> int:
             self.max_hp = 97 + self.strength * 3
             return self.max_hp
@@ -93,3 +99,6 @@ class Creatures:
             self.inventory = []
             self.npc = False
             self.god = False
+
+
+
