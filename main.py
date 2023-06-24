@@ -211,6 +211,7 @@ def main():
                 for name in live_creatures:
                     name_agility[f'{name}'] = dict_of_creatures.get(name).agility
                     creatures_for_battle[f'{name}'] = dict_of_creatures.get(name)
+
                 res = sf.battle(creatures=creatures_for_battle, name_agility=name_agility)
                 if res:
                     print('You win!')
