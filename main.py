@@ -1,4 +1,6 @@
 from models.creatures import Creatures
+# from models.items import Items
+from models.spells import Spell
 import action.step_field as sf
 import json
 
@@ -30,8 +32,20 @@ def main():
                 print('Invalid input')
 
     # TODO: add functionality to main function. Add item to inventory - also add to main function
-    def add_spell(nm: str):
-        dict_of_creatures.get(nm).spells.append(input(f'Enter spell name:\n'))
+    def add_spell(name: str, desc: str, heal_amount: int, damage_amount: int, type_spell: str, vampiric: bool):
+        dict_of_spells[name] = Spell(name, desc, heal_amount, damage_amount, type_spell, vampiric)
+
+    def add_spell_to_creature(name_creature: str, spell: str):
+        try:
+            if dict_of_creatures[name_creature].spells is None:
+                dict_of_creatures[name_creature].spells = spell
+            else:
+                sp = dict_of_creatures[name_creature].spells
+                sp.append(spell)
+                dict_of_creatures[name_creature].spells = sp
+
+        except AttributeError:
+            print('Creature or spell not found')
 
     def edit_creature(nm: str, st: str, xv=None):
         match st:
@@ -125,6 +139,7 @@ def main():
                 print('Invalid input')
 
     dict_of_creatures = {}
+    dict_of_spells = {}
     while True:
 
         s = input(f'Call info --- info\n'
@@ -132,8 +147,10 @@ def main():
                   f'Edit creature --- edit\n'
                   f'Save creatures --- save\n'
                   f'Load creatures --- load\n'
-                  f'Add spell --- add spell\n'
-                  f'Add item to inventory --- add item\n'
+                  f'Add spell --- spell\n'
+                  f'Add spell to creature --- add spell\n'
+                  f'Add item --- item\n'
+                  f'Add item to creature --- add item\n'
                   f'Start battle --- start\n'
                   f'Close --- exit\n'
                   f'Enter: ').lower()
@@ -164,6 +181,18 @@ def main():
                 load_creatures()
             case 'save':
                 save_creatures()
+            case 'add spell':
+                name = input(f'Enter name of spell: ')
+                desc = input(f'Enter description of spell: ')
+                heal_amount = int(input(f'Enter heal amount: '))
+                damage_amount = int(input(f'Enter damage amount: '))
+                type_spell = input(f'Fire, water, ice, wind, earth or electro: ')
+                vampiric = bool(input(f'Vampiric spell? (True/False): '))
+                add_spell(name, desc, heal_amount, damage_amount, type_spell, vampiric)
+                s = input(f'Do you want to add spell to creature? (Enter name of creature): ')
+                if s in dict_of_creatures:
+                    add_spell_to_creature(s, name)
+                    print(f'Spell {name} added to creature {s}')
             case 'start':
                 name_agility = {}
                 creatures_for_battle = {}

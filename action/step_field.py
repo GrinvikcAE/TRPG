@@ -3,7 +3,10 @@ from time import sleep
 
 
 def battle(creatures: dict, name_agility) -> bool:
+
     def turn(npc=True):
+        SLEEP_TIME = 0.5
+
         def healing(name, heal):
             if creatures.get(name).current_hp + heal >= creatures.get(name).max_hp:
                 creatures.get(name).current_hp = creatures.get(name).max_hp
@@ -15,7 +18,7 @@ def battle(creatures: dict, name_agility) -> bool:
             heal = creatures.get(name).wisdom + dice_1
             attack = creatures.get(name).intelligence + dice_1
             dice_2 = choice(['heal', 'attack'])
-            sleep(1)
+            sleep(SLEEP_TIME)
 
             if creatures.get(name).current_hp == creatures.get(name).max_hp and dice_2 == 'heal':
                 dice_2 = 'attack'
@@ -28,7 +31,7 @@ def battle(creatures: dict, name_agility) -> bool:
                     r = choice(enemy)
                     creatures.get(r).current_hp -= attack
                 print(f'{creatures.get(r).name} attacked by {creatures.get(name).name} for {attack} damage\n')
-                sleep(1)
+                sleep(SLEEP_TIME)
 
             # TODO: create logic for healing creatures in one team (enemy or allies)
 
@@ -38,7 +41,7 @@ def battle(creatures: dict, name_agility) -> bool:
                     creatures.get(name).current_hp = creatures.get(name).max_hp
                 else:
                     creatures.get(name).current_hp += heal
-                sleep(1)
+                sleep(SLEEP_TIME)
         else:
             print(f'{name} is ready to turn!')
             s = input(f'Enter number (1-6) from dice or enter "dice" to roll dice: ')
@@ -61,7 +64,7 @@ def battle(creatures: dict, name_agility) -> bool:
                     r = input(('Enter name of enemy: ' + '{}, ' * len(enemy) + '\nEnter: ').format(*enemy))
                     creatures.get(r).current_hp -= attack
                 print(f'{creatures.get(r).name} attacked by {creatures.get(name).name} for {attack} damage')
-                sleep(1)
+                sleep(SLEEP_TIME)
 
             if s == 'heal':
                 if creatures.get(name).enemy:
@@ -83,7 +86,7 @@ def battle(creatures: dict, name_agility) -> bool:
                 else:
                     allies.remove(name)
                 name_agility.remove(name)
-                sleep(1)
+                sleep(SLEEP_TIME)
 
     name_agility = list(dict(sorted(name_agility.items(), key=lambda x: x[1])))[::-1]
     print(('Turn order: ' + '{}, ' * len(name_agility)).format(*name_agility))

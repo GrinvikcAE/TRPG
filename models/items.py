@@ -7,7 +7,10 @@ class Items:
             self.name = name
             self.description = description
             if self.description[0] == 'Heal':
-                self.heal_amount = int(self.description[1:])
+                self.heal_amount = int(self.description[1])
+
+        def __setattr__(self, key: str, value):
+            self.__dict__[key] = value
 
     class Weapon:
 
@@ -16,9 +19,15 @@ class Items:
             self.name = name
             self.description = description
 
+        def __setattr__(self, key: str, value):
+            self.__dict__[key] = value
+
     class Armor:
 
         def __init__(self, name, amount):
             self.item_class = 'Armor'
             self.name = name
             self.amount = amount
+
+        def __setattr__(self, key: str, value):
+            self.__dict__[key] = value
