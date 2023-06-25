@@ -8,25 +8,12 @@ def main():
         name = input(f'Name of creature: ')
         try:
             print('-==-==-==-')
-            print(f'Type: {dict_of_creatures.get(f"{name}").type}\n',
-                  f'Name: {dict_of_creatures.get(f"{name}").name}\n',
-                  f'Strength: {dict_of_creatures.get(f"{name}").strength}\n',
-                  f'Agility: {dict_of_creatures.get(f"{name}").agility}\n',
-                  f'Intelligence: {dict_of_creatures.get(f"{name}").intelligence}\n',
-                  f'Wisdom: {dict_of_creatures.get(f"{name}").wisdom}\n',
-                  f'Shield: {dict_of_creatures.get(f"{name}").shield}\n',
-                  f'Max hp: {dict_of_creatures.get(f"{name}").max_hp}\n',
-                  f'Current hp: {dict_of_creatures.get(f"{name}").current_hp}\n',
-                  f'Armor: {dict_of_creatures.get(f"{name}").armor}\n',
-                  f'Spells: {dict_of_creatures.get(f"{name}").spells}\n',
-                  f'Inventory: {dict_of_creatures.get(f"{name}").inventory}\n',
-                  f'NPC: {dict_of_creatures.get(f"{name}").npc}\n',
-                  f'God: {dict_of_creatures.get(f"{name}").god}\n',
-                  f'Enemy: {dict_of_creatures.get(f"{name}").enemy}\n',
-                  f'Dead: {dict_of_creatures.get(f"{name}").dead}\n',
-                  )
+            print(f'Info of {name}')
+            d = dict_of_creatures.get(name).__dict__
+            for k in d:
+                print(f'{k}: {d[k]}')
             print('-==-==-==-')
-        except NameError:
+        except AttributeError:
             print('Name not found')
 
     def add_creature():
@@ -34,57 +21,57 @@ def main():
         match s:
             case 'alive':
                 name = input(f'Enter name of alive creature:\n')
-                dict_of_creatures[f'{name}'] = Creatures.Alive(name)
+                dict_of_creatures[name] = Creatures.Alive(name)
 
             case 'undead':
                 name = input(f'Enter name of undead creature:\n')
-                dict_of_creatures[f'{name}'] = Creatures.Undead(name)
+                dict_of_creatures[name] = Creatures.Undead(name)
             case _:
                 print('Invalid input')
 
     # TODO: add functionality to main function. Add item to inventory - also add to main function
     def add_spell(nm: str):
-        dict_of_creatures.get(f'{nm}').spells.append(input(f'Enter spell name:\n'))
+        dict_of_creatures.get(nm).spells.append(input(f'Enter spell name:\n'))
 
     def edit_creature(nm: str, st: str, xv=None):
         match st:
             case 'name':
                 try:
                     name = input('Enter a new name: ')
-                    dict_of_creatures[f'{name}'] = dict_of_creatures.get(f'{nm}')
-                    dict_of_creatures[f'{name}'].name = name
-                    del dict_of_creatures[f'{nm}']
+                    dict_of_creatures[name] = dict_of_creatures.get(nm)
+                    dict_of_creatures[name].name = name
+                    del dict_of_creatures[nm]
                 except AttributeError:
                     print('Name not found')
             case 'level':
-                dict_of_creatures[f'{nm}'].level = xv
+                dict_of_creatures[nm].level = xv
             case 'strength':
-                dict_of_creatures[f'{nm}'].strength = xv
-                dict_of_creatures[f'{nm}'].max_hp = dict_of_creatures[f'{nm}'].calc_max_hp()
+                dict_of_creatures[nm].strength = xv
+                dict_of_creatures[nm].max_hp = dict_of_creatures[nm].calc_max_hp()
             case 'agility':
-                dict_of_creatures[f'{nm}'].agility = xv
+                dict_of_creatures[nm].agility = xv
             case 'intelligence':
-                dict_of_creatures[f'{nm}'].intelligence = xv
+                dict_of_creatures[nm].intelligence = xv
             case 'wisdom':
-                dict_of_creatures[f'{nm}'].wisdom = xv
+                dict_of_creatures[nm].wisdom = xv
             case 'shield':
-                dict_of_creatures[f'{nm}'].shield = xv
+                dict_of_creatures[nm].shield = xv
             case 'current_hp':
-                dict_of_creatures[f'{nm}'].current_hp = xv
+                dict_of_creatures[nm].current_hp = xv
             case 'armor':
-                dict_of_creatures[f'{nm}'].armor = xv
+                dict_of_creatures[nm].armor = xv
             case 'spells':
-                dict_of_creatures[f'{nm}'].spells = xv
+                dict_of_creatures[nm].spells = xv
             case 'inventory':
-                dict_of_creatures[f'{nm}'].inventory = xv
+                dict_of_creatures[nm].inventory = xv
             case 'npc':
-                dict_of_creatures[f'{nm}'].npc = xv
+                dict_of_creatures[nm].npc = xv
             case 'god':
-                dict_of_creatures[f'{nm}'].god = xv
+                dict_of_creatures[nm].god = xv
             case 'enemy':
-                dict_of_creatures[f'{nm}'].enemy = xv
+                dict_of_creatures[nm].enemy = xv
             case 'dead':
-                dict_of_creatures[f'{nm}'].dead = xv
+                dict_of_creatures[nm].dead = xv
             case _:
                 print('Invalid input')
 

@@ -3,27 +3,10 @@ class Creatures:
         self.type = 'Creature'
 
     class Alive:
-        type: str
-        name: str
-        level: int
-        strength: int
-        agility: int
-        intelligence: int
-        wisdom: int
-        max_hp: int
-        current_hp: int
-        shield: int
-        armor: int
-        # spells: list
-        # inventory: dict
-        npc: bool
-        god: bool
-        enemy: bool
-        dead: bool
 
-        def __init__(self, name, level=1, strength=1, agility=1, intelligence=1, wisdom=1,
-                     shield=0, current_hp=100, armor=0, spells=None, inventory=None,
-                     npc=False, god=False, enemy=False, dead=False):
+        def __init__(self, name: str, level: int = 1, strength: int = 1, agility: int = 1, intelligence: int = 1,
+                     wisdom: int = 1, shield: int = 0, current_hp: int = 100, armor: int = 0, spells=None,
+                     inventory=None, npc: bool = False, god: bool = False, enemy: bool = False, dead: bool = False):
             self.type = 'Alive'
             self.name = name
             self.level = level
@@ -42,7 +25,7 @@ class Creatures:
             self.enemy = enemy
             self.dead = dead
 
-        def __setattr__(self, key, value):
+        def __setattr__(self, key: str, value):
             self.__dict__[key] = value
 
         def save(self):
@@ -72,18 +55,6 @@ class Creatures:
             self.armor += x
 
     class Undead:
-        name: str
-        strength: int
-        agility: int
-        intelligence: int
-        wisdom: int
-        hp: int
-        shield: int
-        armor: int
-        # spells: dict
-        # inventory: dict
-        npc: bool
-        god: bool
 
         def __init__(self, name):
             self.type = 'Undead'
