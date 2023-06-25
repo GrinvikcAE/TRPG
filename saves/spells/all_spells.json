@@ -1,0 +1,29 @@
+[
+   {
+      "type": "Spell",
+      "name": "Fireburn",
+      "description": "Splash of fire",
+      "heal_amount": 0,
+      "damage_amount": 100,
+      "type_spell": "Fire",
+      "vampiric": false
+   },
+   {
+      "type": "Spell",
+      "name": "Waterburn",
+      "description": "Splash of water",
+      "heal_amount": 5,
+      "damage_amount": 50,
+      "type_spell": "water",
+      "vampiric": true
+   },
+   {
+      "type": "Spell",
+      "name": "Icepeak",
+      "description": "Ice peak",
+      "heal_amount": 10,
+      "damage_amount": 10,
+      "type_spell": "ice",
+      "vampiric": true
+   }
+]

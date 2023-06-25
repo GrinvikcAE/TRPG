@@ -31,6 +31,7 @@ class Creatures:
         def save(self):
             return self.__dict__
 
+        # @property
         def calc_max_hp(self) -> int:
             self.max_hp = 97 + self.strength * 3
             return self.max_hp
