@@ -66,7 +66,7 @@ def battle(creatures: dict, name_agility) -> bool:
                 print(f'{creatures.get(r).name} attacked by {creatures.get(name).name} for {attack} damage')
                 sleep(SLEEP_TIME)
 
-            if s == 'heal':
+            elif s == 'heal':
                 if creatures.get(name).enemy:
                     r = input(('Enter name of allies: ' + '{}, ' * len(enemy) + '\nEnter: ').format(*enemy))
                     if r == 'self':
@@ -79,7 +79,7 @@ def battle(creatures: dict, name_agility) -> bool:
                         r = name
                     healing(r, heal)
                     print(f'{creatures.get(r).name} heals for {heal} by {name}')
-            if s == 'RUN':
+            elif s == 'RUN':
                 print(f'{name} runs away from battlefield\n')
                 if creatures.get(name).enemy:
                     enemy.remove(name)
@@ -93,11 +93,13 @@ def battle(creatures: dict, name_agility) -> bool:
     sleep(1)
     enemy = []
     allies = []
+
     for creature in creatures:
         if creatures.get(creature).enemy is True:
             enemy.append(creature)
-        if creatures.get(creature).enemy is False:
+        elif creatures.get(creature).enemy is False:
             allies.append(creature)
+
     while len(enemy) > 0 or len(allies) > 0:
         for name in name_agility:
             if len(allies) == 0:
@@ -123,15 +125,15 @@ def battle(creatures: dict, name_agility) -> bool:
                         turn(npc=False)
                     else:
                         break
-
-            if creatures.get(name).enemy is False and creatures.get(name).current_hp <= 0:
-                print(creatures.get(name).name + ' is died\n')
-                allies.remove(name)
-                name_agility.remove(name)
-            if creatures.get(name).enemy is True and creatures.get(name).current_hp <= 0:
-                print(creatures.get(name).name + ' is died\n')
-                enemy.remove(name)
-                name_agility.remove(name)
+            if creatures.get(name).current_hp <= 0:
+                if name in allies:
+                    print(creatures.get(name).name + ' is died\n')
+                    allies.remove(name)
+                    name_agility.remove(name)
+                elif name in enemy:
+                    print(creatures.get(name).name + ' is died\n')
+                    enemy.remove(name)
+                    name_agility.remove(name)
 
             print('Enemy:')
             for i in enemy:
