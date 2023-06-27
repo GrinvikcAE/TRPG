@@ -5,8 +5,7 @@
       "description": "Splash of fire",
       "heal_amount": 0,
       "damage_amount": 100,
-      "type_spell": "Fire",
-      "vampiric": false
+      "type_spell": "Fire"
    },
    {
       "type": "Spell",
@@ -14,8 +13,7 @@
       "description": "Splash of water",
       "heal_amount": 5,
       "damage_amount": 50,
-      "type_spell": "water",
-      "vampiric": true
+      "type_spell": "water"
    },
    {
       "type": "Spell",
@@ -23,7 +21,6 @@
       "description": "Ice peak",
       "heal_amount": 10,
       "damage_amount": 10,
-      "type_spell": "ice",
-      "vampiric": true
+      "type_spell": "ice"
    }
 ]

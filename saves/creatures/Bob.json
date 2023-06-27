@@ -1,0 +1,23 @@
+[
+   {
+      "type": "Alive",
+      "name": "Bob",
+      "level": 1,
+      "strength": 1,
+      "agility": 1,
+      "intelligence": 1,
+      "wisdom": 1,
+      "shield": 0,
+      "max_hp": 100,
+      "current_hp": 100,
+      "armor": 0,
+      "spells": [
+         "Fireburn"
+      ],
+      "inventory": null,
+      "npc": false,
+      "god": false,
+      "enemy": false,
+      "dead": false
+   }
+]

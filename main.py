@@ -33,7 +33,6 @@ def main():
 
     # TODO: Add item to inventory - also add to main function
 
-
     def edit_creature(nm: str, st: str, xv=None):
         match st:
             case 'name':
@@ -103,6 +102,11 @@ def main():
                         dict_of_creatures[f'{d[i]["name"]}'] = Creatures.Undead(d[i]['name'])
                 except FileNotFoundError:
                     print('Error in load file or wrong file name')
+            if s == 'all_creatures':
+                load_spells(s='all_spells')
+            else:
+                for j in d[0]['spells']:
+                    load_spells(s=j)
 
     def save_creatures():
         s = input('Save all creatures or only one (enter "all" or name of creature)?\n'
@@ -115,22 +119,35 @@ def main():
                     lst.append(d)
                 with open('saves/creatures/all_creatures.json', 'w') as js:
                     json.dump(lst, js, indent=3)
+                save_spells(s='all')
             case _ if s in dict_of_creatures:
                 if dict_of_creatures[s].type == 'Alive':
-                    d = dict_of_creatures.get(s).save()
+                    d = [dict_of_creatures.get(s).save()]
+
                     with open(f'saves/creatures/{s}.json', 'w') as js:
                         json.dump(d, js, indent=3)
+                    for i in dict_of_creatures.get(s).spells:
+                        save_spells(s=i)
                 elif dict_of_creatures[s].type == 'Undead':
                     pass
             case _:
                 print('Invalid input')
 
-    def add_spell(name: str, desc: str, heal_amount: int, damage_amount: int, type_spell: str, vampiric: bool):
-        dict_of_spells[name] = Spell(name, desc, heal_amount, damage_amount, type_spell, vampiric)
+    def add_spell(name: str, desc: str, heal_amount: int, damage_amount: int, type_spell: str):
+        dict_of_spells[name] = Spell(name, desc, heal_amount, damage_amount, type_spell)
 
-    def save_spells():
-        s = input('Save all spells or only one (enter "all" or name of spell)?\n'
-                  'Enter: ')
+    def info_spell(name: str):
+        try:
+            print('-==-==-==-')
+            print(f'Info of {name}')
+            d = dict_of_spells.get(name).__dict__
+            for k in d:
+                print(f'{k}: {d[k]}')
+            print('-==-==-==-')
+        except AttributeError:
+            print('Name of spell not found')
+
+    def save_spells(s):
         match s:
             case 'all':
                 lst = []
@@ -140,27 +157,24 @@ def main():
                 with open('saves/spells/all_spells.json', 'w') as js:
                     json.dump(lst, js, indent=3)
             case _ if s in dict_of_spells:
-                d = dict_of_spells.get(s).save()
+                d = [dict_of_spells.get(s).save()]
                 with open(f'saves/spells/{s}.json', 'w') as js:
                     json.dump(d, js, indent=3)
             case _:
                 print('Invalid input')
 
     def add_spell_to_creature(name_creature: str, spell: str):
-        try:
-            if dict_of_creatures[name_creature].spells is None:
-                dict_of_creatures[name_creature].spells = spell
+        if name_creature in dict_of_creatures or spell in dict_of_spells:
+            if not dict_of_creatures[name_creature].spells:
+                dict_of_creatures[name_creature].spells = [spell, ]
             else:
-                sp = dict_of_creatures[name_creature].spells
+                sp = list(*[dict_of_creatures[name_creature].spells])
                 sp.append(spell)
                 dict_of_creatures[name_creature].spells = sp
-
-        except AttributeError:
+        else:
             print('Creature or spell not found')
 
-    def load_spells():
-        s = input('Enter file name (wout .json)\n'
-                  'Enter: ')
+    def load_spells(s):
         with open(f'saves/spells/{s}.json', 'r') as js:
             d = json.load(js)
             for i in range(len(d)):
@@ -170,7 +184,7 @@ def main():
                                                          heal_amount=d[i]['heal_amount'],
                                                          damage_amount=d[i]['damage_amount'],
                                                          type_spell=d[i]['type_spell'],
-                                                         vampiric=d[i]['vampiric'])
+                                                         )
                 except FileNotFoundError:
                     print('Error in load file or wrong file name')
 
@@ -179,13 +193,14 @@ def main():
 
     while True:
 
-        s = input(f'Call info --- info\n'
+        s = input(f'Info about creature --- info\n'
                   f'Add creature --- add\n'
                   f'Edit creature --- edit\n'
                   f'Save creatures --- save\n'
                   f'Load creatures --- load\n'
                   f'Add spell --- spell\n'
                   f'Add spell to creature --- add spell\n'
+                  f'Info about spell --- info spell\n'
                   f'Save spells --- save spells\n'
                   f'Load spells --- load spells\n'
                   f'Add item --- item\n'
@@ -227,16 +242,26 @@ def main():
                 heal_amount = int(input(f'Enter heal amount: '))
                 damage_amount = int(input(f'Enter damage amount: '))
                 type_spell = input(f'Fire, water, ice, wind, earth or electro: ')
-                # vampiric = bool(input(f'Vampiric spell? (True/False): '))
                 add_spell(name, desc, heal_amount, damage_amount, type_spell)
                 s = input(f'Do you want to add spell to creature? (Enter name of creature): ')
                 if s in dict_of_creatures:
                     add_spell_to_creature(s, name)
                     print(f'Spell {name} added to creature {s}')
+            case 'info spell':
+                name = input(f'Name of spell: ')
+                info_spell(name)
             case 'save spells':
-                save_spells()
+                s = input('Save all spells or only one (enter "all" or name of spell)?\n'
+                          'Enter: ')
+                save_spells(s)
             case 'load spells':
-                load_spells()
+                s = input('Enter file name (wout .json)\n'
+                          'Enter: ')
+                load_spells(s)
+            case 'add spell':
+                nm = input(f'Enter name of creature: ')
+                sp = input(f'Enter name of spell: ')
+                add_spell_to_creature(nm, sp)
             case 'start':
                 name_agility = {}
                 creatures_for_battle = {}

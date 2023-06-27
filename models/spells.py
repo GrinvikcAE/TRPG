@@ -1,7 +1,7 @@
 class Spell:
 
     def __init__(self, name, description: str = '', heal_amount: int = 0,
-                 damage_amount: int = 0, type_spell: str = '', vampiric: bool = False):
+                 damage_amount: int = 0, type_spell: str = ''):
         self.type = 'Spell'
         self.name = name
         self.description = description
@@ -11,7 +11,7 @@ class Spell:
         if heal_amount > 0 and damage_amount > 0:
             self.vampiric = True
         else:
-            self.vampiric = vampiric
+            self.vampiric = False
 
     def __setattr__(self, key: str, value):
         self.__dict__[key] = value

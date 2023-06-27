@@ -7,6 +7,8 @@ class Creatures:
         def __init__(self, name: str, level: int = 1, strength: int = 1, agility: int = 1, intelligence: int = 1,
                      wisdom: int = 1, shield: int = 0, current_hp: int = 100, armor: int = 0, spells=None,
                      inventory=None, npc: bool = False, god: bool = False, enemy: bool = False, dead: bool = False):
+            if spells is None:
+                spells = []
             self.type = 'Alive'
             self.name = name
             self.level = level
